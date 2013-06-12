@@ -1,0 +1,47 @@
+[
+	{
+		"caption": "caption1",
+		"shortDescr": "my descr",
+		"category": "category1"
+	},
+	{
+		"caption": "caption2",
+		"shortDescr": "my descr",
+		"category": "category2"
+	},
+	{
+		"caption": "caption2",
+		"shortDescr": "my descr",
+		"category": "category3"
+	},
+	{
+		"caption": "caption2",
+		"shortDescr": "my descr",
+		"category": "category2"
+	},
+	{
+		"caption": "caption2",
+		"shortDescr": "my descr",
+		"category": "category1"
+	},
+	{
+		"caption": "caption2",
+		"shortDescr": "my descr",
+		"category": "category2"
+	},
+	{
+		"caption": "caption2",
+		"shortDescr": "my descr",
+		"category": "category2"
+	},
+	{
+		"caption": "caption2",
+		"shortDescr": "my descr",
+		"category": "category1"
+	},
+	{
+		"caption": "caption2",
+		"shortDescr": "my descr",
+		"category": "category2"
+	}
+]

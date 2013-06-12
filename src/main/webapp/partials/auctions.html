@@ -1,0 +1,32 @@
+
+<div class="well">
+    <input data-ng-model="searchFilter">
+    <select data-ng-model="orderProp">
+        <option value="productionYear">Year</option>
+        <option value="age">Newest</option>
+    </select>
+</div>
+<div class="well" data-ng-repeat="car in auctions | filter: searchFilter | orderBy:orderProp">
+    <div class="row">
+        <div class="span8">
+            <div class="row">
+                <div class="span2">
+                    <a href="#" >
+                        <img src="img/thumb1.png" alt="" class="img-polaroid">
+                    </a>
+                </div>
+                <div class="span4">
+                    <h3><a data-ng-href="#/car/{{car.id}}">{{car.title}}</a></h3>
+                    <h4>{{car.mark.name}} - {{car.model.name}}</h4>
+                    <span>{{car.productionYear | date:'yyyy'}}, {{car.milage}} km, {{car.fuelType | lowercase}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="span3">
+            <span>Price: {{car.price | currency: "EU " }}</span>
+            <!--                        <h5>Color: {{car.color}}</h5>
+                                    <h5>Milage: {{car.milage | number:0}} km</h5>
+                                    <h5>Fuel type: {{car.fuelType}}</h5>-->
+        </div>
+    </div>
+</div>

@@ -1,0 +1,69 @@
+<form class="form-horizontal" data-ng-controller="AddAuctionCtrl">
+    <div class="control-group">
+        <label class="control-label" for="inputTitle">Title</label>
+        <div class="controls">
+            <input id="inputTitle" data-ng-model="title" required>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputDescription">Description</label>
+        <div class="controls">
+            <textarea id="inputDescription" data-ng-model="description" required></textarea>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputYear">Year</label>
+        <div class="controls">
+            <input id="inputYear" data-ng-model="productionYear" required type="date">
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputMark">Mark</label>
+        <div class="controls">
+            <select id="inputMark" data-ng-model="mark" data-ng-options="m.name for m in marks" required>
+                <option value="">-- chose mark --</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputModel">Model</label>
+        <div class="controls">
+            <select id="inputModel" data-ng-model="model" data-ng-options="m.name for m in mark.models" required>
+                <option value="">-- chose model --</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputColor">Color</label>
+        <div class="controls">
+            <select id="inputColor" data-ng-model="color" data-ng-options="c.name for c in colors" required>
+                <option value="">-- chose color --</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputFuel">Fuel</label>
+        <div class="controls">
+            <select id="inputFuel" data-ng-model="fuel" data-ng-options="f.name for f in fuelTypes" required>
+                <option value="">-- chose fuel type --</option>
+            </select>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputMilage">Milage</label>
+        <div class="controls">
+            <input type="number" id="inputMilage" data-ng-model="milage" required>
+        </div>
+    </div>
+    <div class="control-group">
+        <label class="control-label" for="inputPrice">Price</label>
+        <div class="controls">
+            <input type="number" id="inputPrice" data-ng-model="price" required>
+        </div>
+    </div>
+    <div class="control-group">
+        <div class="controls">
+            <button type="submit" class="btn" data-ng-click="save()">Add</button>
+        </div>
+    </div>
+</form>
