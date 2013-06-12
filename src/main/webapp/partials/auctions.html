@@ -6,27 +6,33 @@
         <option value="age">Newest</option>
     </select>
 </div>
-<div class="well" data-ng-repeat="car in auctions | filter: searchFilter | orderBy:orderProp">
-    <div class="row">
-        <div class="span8">
-            <div class="row">
-                <div class="span2">
-                    <a href="#" >
-                        <img src="img/thumb1.png" alt="" class="img-polaroid">
-                    </a>
-                </div>
-                <div class="span4">
-                    <h3><a data-ng-href="#/car/{{car.id}}">{{car.title}}</a></h3>
-                    <h4>{{car.mark.name}} - {{car.model.name}}</h4>
-                    <span>{{car.productionYear | date:'yyyy'}}, {{car.milage}} km, {{car.fuelType | lowercase}}</span>
-                </div>
+<div class="row">
+    <div class="span2 auction-sidebar">
+        <div >
+            <h4>Parameters</h4>
+            <div>
+                <h5>Price (EU)</h5>
+                <input data-ng-model="priceFrom" class="price" placeholder="from"> - <input data-ng-model="priceTo" class="price" placeholder="to">
             </div>
         </div>
-        <div class="span3">
-            <span>Price: {{car.price | currency: "EU " }}</span>
-            <!--                        <h5>Color: {{car.color}}</h5>
-                                    <h5>Milage: {{car.milage | number:0}} km</h5>
-                                    <h5>Fuel type: {{car.fuelType}}</h5>-->
+        <hr>
+    </div>
+    <div class="span10 auction-content">
+        <div class="row auction-row" data-ng-repeat="car in auctions | priceFromFilter: priceFrom:priceTo">
+
+            <div class="span2">
+                <a href="#" >
+                    <img src="img/thumb1.png" alt="" class="img-polaroid">
+                </a>
+            </div>
+            <div class="span6">
+                <h3><a data-ng-href="#/car/{{car.id}}">{{car.title}}</a></h3>
+                <h4>{{car.mark.name}} - {{car.model.name}}</h4>
+                <span>{{car.productionYear | date:'yyyy'}}, {{car.milage}} km, {{car.fuelType | lowercase}}</span>
+            </div>
+            <div class="span2">
+                <h3><span class="price">{{car.price | currency: "EU " }}</span></h3>
+            </div>
         </div>
     </div>
 </div>

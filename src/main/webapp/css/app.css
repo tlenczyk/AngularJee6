@@ -1,5 +1,34 @@
 /* app css stylesheet */
 .my-modal{
-	max-width: 330px;
+    max-width: 330px;
 }
 
+.auction-row{
+    border-bottom: solid silver;
+    padding: 7px 0px 7px 0px;
+    border-width:1px;
+}
+.auction-row:hover{
+    background-color: #F5F5F5;
+    border-radius: 5px;
+}
+span.price{
+    color: #303030;
+    font-size: 23px;
+    font-weight: bold;
+}
+/*.auction-sidebar{*/
+/*border-right:  solid silver;*/
+/*border-width:1px;*/
+/*-moz-box-sizing: border-box;*/
+/*height: 1000px;*/
+/*}*/
+.auction-content{
+    /*height: 1000px;*/
+    /*    border-left: solid silver;
+        border-width:1px;
+        -moz-box-sizing: border-box;*/
+}
+input.price{
+    width: 55px;
+}
