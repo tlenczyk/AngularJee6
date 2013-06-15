@@ -54,7 +54,7 @@ public class AuctionTest {
         System.out.println("Dumping old records...");
         em.createQuery("delete from Auction").executeUpdate();
         em.createQuery("delete from Model").executeUpdate();
-        em.createQuery("delete from Mark").executeUpdate();
+        em.createQuery("delete from Make").executeUpdate();
         utx.commit();
     }
 
@@ -66,17 +66,17 @@ public class AuctionTest {
 
         System.out.println("Inserting records...");
 
-        Mark mark = new Mark("Peugeot");
+        Make make = new Make("Peugeot");
         for (int i = 0; i < 10; i++) {
             Model model = new Model("Model " + i);
-            mark.getModels().add(model);
+            make.getModels().add(model);
         }
 
-        em.persist(mark);
+        em.persist(make);
 
         for (int i = 0; i < 1; i++) {
             Auction auction = new Auction();
-            auction.setMark(mark);
+            auction.setMake(make);
             auction.setColor(Color.BLACK);
             auction.setPrice(new BigDecimal("10000" + i));
 
@@ -98,33 +98,33 @@ public class AuctionTest {
     }
 
     @Test
-    public void shouldFindAllMarks() throws Exception {
+    public void shouldFindAllMakes() throws Exception {
         // given
-        String selectMarks = "select m from Mark m";
+        String selectMakes = "select m from Make m";
 
         // when
         System.out.println("Selecting (using JPQL)...");
-        List<Mark> marks = em.createQuery(selectMarks, Mark.class).getResultList();
+        List<Make> makes = em.createQuery(selectMakes, Make.class).getResultList();
 
         List<Model> models = em.createQuery("select m from Model m", Model.class).getResultList();
 
-        Assert.assertNotNull(marks);
+        Assert.assertNotNull(makes);
         Assert.assertNotNull(models);
-        Assert.assertEquals(1, marks.size());
+        Assert.assertEquals(1, makes.size());
         Assert.assertEquals(10, models.size());
 
         List<Auction> auctions = em.createQuery("select a from Auction a", Auction.class).getResultList();
-        Assert.assertNotNull(marks);
-        Assert.assertEquals(1, marks.size());
+        Assert.assertNotNull(makes);
+        Assert.assertEquals(1, makes.size());
 //
         Auction a = auctions.get(0);
-        Mark mark = a.getMark();
-        a.setMark(null);
+        Make make = a.getMake();
+        a.setMake(null);
         em.merge(a);
-        em.remove(mark);
-        marks = em.createQuery(selectMarks, Mark.class).getResultList();
-        Assert.assertNotNull(marks);
-        Assert.assertEquals(0, marks.size());
+        em.remove(make);
+        makes = em.createQuery(selectMakes, Make.class).getResultList();
+        Assert.assertNotNull(makes);
+        Assert.assertEquals(0, makes.size());
 
 
         models = em.createQuery("select m from Model m", Model.class).getResultList();

@@ -15,7 +15,7 @@ import org.junit.After;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import pl.tls.entity.Mark;
+import pl.tls.entity.Make;
 import pl.tls.entity.Model;
 import pl.tls.service.util.Producer;
 
@@ -24,15 +24,15 @@ import pl.tls.service.util.Producer;
  * @author Tomasz.Lenczyk
  */
 @RunWith(Arquillian.class)
-public class MarkRepoTest {
+public class MakeRepoTest {
 
     @Deployment
     public static Archive<?> createDeployment() {
 
         MavenDependencyResolver resolver = DependencyResolvers.use(MavenDependencyResolver.class).loadMetadataFromPom("pom.xml");
         WebArchive archive = ShrinkWrap.create(WebArchive.class, "test.war")
-                .addPackage(Mark.class.getPackage())
-                .addPackage(MarkRepo.class.getPackage())
+                .addPackage(Make.class.getPackage())
+                .addPackage(MakeRepo.class.getPackage())
                 .addPackage(Producer.class.getPackage())
                 .addAsLibraries(resolver.artifact("org.apache.commons:commons-lang3").resolveAsFiles())
                 .addAsResource("test-persistence.xml", "META-INF/persistence.xml")
@@ -43,67 +43,67 @@ public class MarkRepoTest {
         return archive;
     }
     @Inject
-    private MarkRepo markRepo;
+    private MakeRepo makeRepo;
     @Inject
     private ModelRepo modelRepo;
 
     @Test
     public void shouldInject() throws Exception {
-        Assert.assertNotNull(markRepo);
+        Assert.assertNotNull(makeRepo);
     }
 
     @Test
-    public void shouldSaveOneMark() throws Exception {
-        Mark m = createMark();
-        markRepo.save(m);
-        long count = markRepo.count();
+    public void shouldSaveOneMake() throws Exception {
+        Make m = createMake();
+        makeRepo.save(m);
+        long count = makeRepo.count();
         Assert.assertEquals(1, count);
     }
 
     @Test
-    public void shouldSaveOneMarkWithTwoModels() throws Exception {
+    public void shouldSaveOneMakeWithTwoModels() throws Exception {
         //Given
-        Mark mark = createMark();
+        Make make = createMake();
 
         //When
-        markRepo.save(mark);
+        makeRepo.save(make);
 
         //Then
-        long count = markRepo.count();
-        List<Mark> allMarks = markRepo.findAll();
+        long count = makeRepo.count();
+        List<Make> allMakes = makeRepo.findAll();
 
         Assert.assertEquals(1, count);
-        Assert.assertEquals(1, allMarks.size());
-        Mark markFromDB = allMarks.get(0);
+        Assert.assertEquals(1, allMakes.size());
+        Make makeFromDB = allMakes.get(0);
 
-        Assert.assertEquals(mark.getName(), markFromDB.getName());
+        Assert.assertEquals(make.getName(), makeFromDB.getName());
 
-        List<Model> modelsFromDB = markFromDB.getModels();
+        List<Model> modelsFromDB = makeFromDB.getModels();
 
         Assert.assertNotNull(modelsFromDB);
         Assert.assertEquals(2, modelsFromDB.size());
-        Assert.assertEquals(mark.getModels().get(0).getName(), modelsFromDB.get(0).getName());
-        Assert.assertEquals(mark.getModels().get(1).getName(), modelsFromDB.get(1).getName());
+        Assert.assertEquals(make.getModels().get(0).getName(), modelsFromDB.get(0).getName());
+        Assert.assertEquals(make.getModels().get(1).getName(), modelsFromDB.get(1).getName());
     }
 
     @Test
-    public void shouldRremoveModelsWhenMarkRemoved() throws Exception {
+    public void shouldRremoveModelsWhenMakeRemoved() throws Exception {
         //Given
-        Mark mark = createMark();
+        Make make = createMake();
 
 
         //When
-        markRepo.save(mark);
-        markRepo.deleteById(mark.getId());
+        makeRepo.save(make);
+        makeRepo.deleteById(make.getId());
 
 
 
         //Then
-        List<Mark> allMarksFromDB = markRepo.findAll();
+        List<Make> allMakesFromDB = makeRepo.findAll();
         List<Model> allModelsFromDB = modelRepo.findAll();
 
-        Assert.assertNotNull(allMarksFromDB);
-        Assert.assertEquals(0, allMarksFromDB.size());
+        Assert.assertNotNull(allMakesFromDB);
+        Assert.assertEquals(0, allMakesFromDB.size());
 
         Assert.assertNotNull(allModelsFromDB);
         Assert.assertEquals(0, allModelsFromDB.size());
@@ -111,12 +111,12 @@ public class MarkRepoTest {
 
     @After
     public void cleanup() throws Exception {
-        int removed = markRepo.deleteAll();
+        int removed = makeRepo.deleteAll();
         System.out.println("Marks removed: " + removed);
     }
 
-    private Mark createMark() {
-        Mark mark = new Mark("Opel");
+    private Make createMake() {
+        Make make = new Make("Opel");
         List<Model> models = new ArrayList<>();
 
         Model m1 = new Model("Corsa");
@@ -125,7 +125,7 @@ public class MarkRepoTest {
         models.add(m1);
         models.add(m2);
 
-        mark.setModels(models);
-        return mark;
+        make.setModels(models);
+        return make;
     }
 }

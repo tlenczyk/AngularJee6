@@ -16,7 +16,7 @@ public class AddAuctionRequest {
     private String title;
     private String description;
     private String productionYear;
-    private Long markId;
+    private Long makeId;
     private Long modelId;
     private String color;
     private String fuel;
@@ -47,12 +47,12 @@ public class AddAuctionRequest {
         this.productionYear = productionYear;
     }
 
-    public Long getMarkId() {
-        return markId;
+    public Long getMakeId() {
+        return makeId;
     }
 
-    public void setMarkId(Long markId) {
-        this.markId = markId;
+    public void setMakeId(Long makeId) {
+        this.makeId = makeId;
     }
 
     public Long getModelId() {
@@ -97,6 +97,6 @@ public class AddAuctionRequest {
 
     @Override
     public String toString() {
-        return "AddAuctionRequest{" + "title=" + title + ", description=" + description + ", productionYear=" + productionYear + ", markId=" + markId + ", modelId=" + modelId + ", color=" + color + ", fuel=" + fuel + ", milage=" + milage + ", price=" + price + '}';
+        return "AddAuctionRequest{" + "title=" + title + ", description=" + description + ", productionYear=" + productionYear + ", makeId=" + makeId + ", modelId=" + modelId + ", color=" + color + ", fuel=" + fuel + ", milage=" + milage + ", price=" + price + '}';
     }
 }

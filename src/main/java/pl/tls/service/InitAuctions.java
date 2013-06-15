@@ -19,10 +19,10 @@ import javax.inject.Inject;
 import pl.tls.entity.Auction;
 import pl.tls.entity.Color;
 import pl.tls.entity.FuelType;
-import pl.tls.entity.Mark;
-import pl.tls.entity.Marks;
+import pl.tls.entity.Make;
+import pl.tls.entity.Makes;
 import pl.tls.entity.Model;
-import pl.tls.repo.MarkRepo;
+import pl.tls.repo.MakeRepo;
 import pl.tls.repo.ModelRepo;
 
 /**
@@ -38,26 +38,26 @@ public class InitAuctions {
     @Inject
     AuctionRepo auctionRepo;
     @Inject
-    MarkRepo markRepo;
+    MakeRepo makeRepo;
 
     @PostConstruct
     public void init() {
 
         auctionRepo.deleteAll();
-        markRepo.deleteAll();
+        makeRepo.deleteAll();
 
-        for (Marks mark : Marks.values()) {
+        for (Makes make : Makes.values()) {
 
-            Mark markToSave = mark.getMark();
-            markRepo.save(markToSave);
+            Make makeToSave = make.getMake();
+            makeRepo.save(makeToSave);
 
             for (int i = 0; i < 10; i++) {
-                int size = mark.getMark().getModels().size();
-                Model model = mark.getMark().getModels().get(getRandom(size - 1));
+                int size = make.getMake().getModels().size();
+                Model model = make.getMake().getModels().get(getRandom(size - 1));
                 Calendar gc = new GregorianCalendar();
                 gc.set(Calendar.YEAR, 2000 + i);
 
-                Auction auction = new Auction("title " + i, "desciption " + i, gc.getTime(), markToSave, model, Color.getRandom(), new BigDecimal(getRandom(30000)), FuelType.GASOLINE, Long.valueOf(getRandom(500001)), new Date());
+                Auction auction = new Auction("title " + i, "desciption " + i, gc.getTime(), makeToSave, model, Color.getRandom(), new BigDecimal(getRandom(30000)), FuelType.GASOLINE, Long.valueOf(getRandom(500001)), new Date());
                 auctionRepo.save(auction);
             }
         }

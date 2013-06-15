@@ -3,11 +3,8 @@ package pl.tls.entity;
 import java.io.Serializable;
 import java.util.Objects;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 
@@ -27,9 +24,6 @@ public class Model implements Serializable {
     private Long id;
     private String name;
 
-//    @ManyToOne
-//    @JoinColumn(name = "MARK_ID")
-//    private Mark mark;
     public Model() {
     }
 
@@ -53,13 +47,6 @@ public class Model implements Serializable {
         this.name = name;
     }
 
-//    public Mark getMark() {
-//        return mark;
-//    }
-//
-//    public void setMark(Mark mark) {
-//        this.mark = mark;
-//    }
     @Override
     public int hashCode() {
         int hash = 7;
@@ -82,9 +69,6 @@ public class Model implements Serializable {
         if (!Objects.equals(this.name, other.name)) {
             return false;
         }
-//        if (!Objects.equals(this.mark, other.mark)) {
-//            return false;
-//        }
         return true;
     }
 

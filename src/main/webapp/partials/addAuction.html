@@ -18,17 +18,17 @@
         </div>
     </div>
     <div class="control-group">
-        <label class="control-label" for="inputMark">Mark</label>
+        <label class="control-label" for="inputmake">Make</label>
         <div class="controls">
-            <select id="inputMark" data-ng-model="mark" data-ng-options="m.name for m in marks" required>
-                <option value="">-- chose mark --</option>
+            <select id="inputmake" data-ng-model="make" data-ng-options="m.name for m in makes" required>
+                <option value="">-- chose make --</option>
             </select>
         </div>
     </div>
     <div class="control-group">
         <label class="control-label" for="inputModel">Model</label>
         <div class="controls">
-            <select id="inputModel" data-ng-model="model" data-ng-options="m.name for m in mark.models" required>
+            <select id="inputModel" data-ng-model="model" data-ng-options="m.name for m in make.models" required>
                 <option value="">-- chose model --</option>
             </select>
         </div>

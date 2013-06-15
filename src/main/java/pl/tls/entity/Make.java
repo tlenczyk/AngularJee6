@@ -20,29 +20,29 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = Mark.REMOVE_ALL, query = "DELETE FROM Mark")
+    @NamedQuery(name = Make.REMOVE_ALL, query = "DELETE FROM Make")
 })
-public class Mark implements Serializable {
+public class Make implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    public static final String REMOVE_ALL = "mark.removeAllMarks";
+    public static final String REMOVE_ALL = "make.removeAllMakes";
     @Id
     @GeneratedValue
     private Long id;
     private String name;
-//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "mark")
+//    @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER, mappedBy = "make")
     @OneToMany(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
-    @JoinColumn(name = "MARK_ID")
+    @JoinColumn(name = "MAKE_ID")
     private List<Model> models = new ArrayList<>();
 
-    public Mark() {
+    public Make() {
     }
 
-    public Mark(String name) {
+    public Make(String name) {
         this.name = name;
     }
 
-    public Mark(String name, List<Model> models) {
+    public Make(String name, List<Model> models) {
         this.name = name;
         this.models = models;
     }
@@ -87,12 +87,12 @@ public class Mark implements Serializable {
         if (getClass() != obj.getClass()) {
             return false;
         }
-        final Mark other = (Mark) obj;
+        final Make other = (Make) obj;
         return true;
     }
 
     @Override
     public String toString() {
-        return "Mark{" + "id=" + id + ", name=" + name + '}';
+        return "Make{" + "id=" + id + ", name=" + name + '}';
     }
 }

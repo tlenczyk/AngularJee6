@@ -4,13 +4,14 @@
 
 angular.module('myApp.controllers', [])
         .controller('AuctionsCtrl', function($scope, Auction) {
+    $scope.makes = Auction.makes.query();
     $scope.auctions = Auction.auctions.query();
 
 }).controller('AuctionDetailsCtrl', function($scope, $routeParams, Auction) {
     $scope.auction = Auction.details.query({auctionId: $routeParams.auctionId});
 
 }).controller('AddAuctionCtrl', function($scope, $routeParams, Auction) {
-    $scope.marks = Auction.marks.query();
+    $scope.makes = Auction.makes.query();
     $scope.colors = Auction.colors.query();
     $scope.fuelTypes = Auction.fuelTypes.query();
     $scope.save = function() {
@@ -18,7 +19,7 @@ angular.module('myApp.controllers', [])
             title: $scope.title,
             description: $scope.description,
             productionYear: $scope.productionYear,
-            markId: $scope.mark.id,
+            makeId: $scope.make.id,
             modelId: $scope.model.id,
             color: $scope.color.name,
             fuel: $scope.fuel.name,

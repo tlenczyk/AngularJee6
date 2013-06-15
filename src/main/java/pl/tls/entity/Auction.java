@@ -40,7 +40,7 @@ public class Auction implements Serializable {
     @Temporal(TemporalType.DATE)
     private Date productionYear;
     @ManyToOne(cascade = CascadeType.REFRESH)
-    private Mark mark;
+    private Make make;
     @ManyToOne(cascade = CascadeType.REFRESH)
     private Model model;
     @Enumerated(EnumType.STRING)
@@ -55,11 +55,11 @@ public class Auction implements Serializable {
     public Auction() {
     }
 
-    public Auction(String title, String description, Date productionYear, Mark mark, Model model, Color color, BigDecimal price, FuelType fuelType, Long milage, Date creationDate) {
+    public Auction(String title, String description, Date productionYear, Make make, Model model, Color color, BigDecimal price, FuelType fuelType, Long milage, Date creationDate) {
         this.title = title;
         this.description = description;
         this.productionYear = productionYear;
-        this.mark = mark;
+        this.make = make;
         this.model = model;
         this.color = color;
         this.price = price;
@@ -100,12 +100,12 @@ public class Auction implements Serializable {
         this.productionYear = productionYear;
     }
 
-    public Mark getMark() {
-        return mark;
+    public Make getMake() {
+        return make;
     }
 
-    public void setMark(Mark mark) {
-        this.mark = mark;
+    public void setMake(Make make) {
+        this.make = make;
     }
 
     public Color getColor() {
@@ -181,7 +181,7 @@ public class Auction implements Serializable {
         if (!Objects.equals(this.description, other.description)) {
             return false;
         }
-        if (!Objects.equals(this.mark, other.mark)) {
+        if (!Objects.equals(this.make, other.make)) {
             return false;
         }
         if (!Objects.equals(this.model, other.model)) {
@@ -207,6 +207,6 @@ public class Auction implements Serializable {
 
     @Override
     public String toString() {
-        return "Auction{" + "id=" + id + ", title=" + title + ", description=" + description + ", productionYear=" + productionYear + ", mark=" + mark + ", model=" + model + ", color=" + color + ", price=" + price + ", fuelType=" + fuelType + ", milage=" + milage + ", creationDate=" + creationDate + '}';
+        return "Auction{" + "id=" + id + ", title=" + title + ", description=" + description + ", productionYear=" + productionYear + ", make=" + make + ", model=" + model + ", color=" + color + ", price=" + price + ", fuelType=" + fuelType + ", milage=" + milage + ", creationDate=" + creationDate + '}';
     }
 }

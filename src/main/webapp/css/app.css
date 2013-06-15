@@ -17,12 +17,9 @@ span.price{
     font-size: 23px;
     font-weight: bold;
 }
-/*.auction-sidebar{*/
-/*border-right:  solid silver;*/
-/*border-width:1px;*/
-/*-moz-box-sizing: border-box;*/
-/*height: 1000px;*/
-/*}*/
+.auction-sidebar select{
+    width: 140px;
+}
 .auction-content{
     /*height: 1000px;*/
     /*    border-left: solid silver;

@@ -20,7 +20,7 @@ import org.junit.runner.RunWith;
 import pl.tls.entity.Auction;
 import pl.tls.entity.Color;
 import pl.tls.entity.FuelType;
-import pl.tls.entity.Mark;
+import pl.tls.entity.Make;
 import pl.tls.entity.Model;
 import pl.tls.service.util.Producer;
 
@@ -50,7 +50,7 @@ public class AuctionRepoTest {
     @Inject
     private AuctionRepo auctionRepo;
     @Inject
-    private MarkRepo markRepo;
+    private MakeRepo makeRepo;
     @Inject
     private ModelRepo modelRepo;
 
@@ -77,36 +77,36 @@ public class AuctionRepoTest {
     }
 
     @Test
-    public void shouldFindAuctionsByMarkName() throws Exception {
+    public void shouldFindAuctionsByMakeName() throws Exception {
         //Given
-        Mark mark = new Mark("Peugeot");
+        Make make = new Make("Peugeot");
         Model model = new Model("206");
-        mark.getModels().add(model);
+        make.getModels().add(model);
 
-        Mark mark2 = new Mark("BMW");
+        Make make2 = new Make("BMW");
         Model model2 = new Model("E39");
-        mark2.getModels().add(model2);
+        make2.getModels().add(model2);
 
-        markRepo.save(mark);
-        markRepo.save(mark2);
+        makeRepo.save(make);
+        makeRepo.save(make2);
 
         Auction auction1 = createAuction();
-        auction1.setMark(mark);
+        auction1.setMake(make);
         Auction auction2 = createAuction();
-        auction2.setMark(mark2);
+        auction2.setMake(make2);
         auctionRepo.save(auction1);
         auctionRepo.save(auction2);
 
         //When
-        List<Auction> auctionsByMarkFromDB = auctionRepo.getAuctionsByMark(mark.getName());
+        List<Auction> auctionsByMakeFromDB = auctionRepo.getAuctionsByMake(make.getName());
 
         //Then
         long actiounsCount = auctionRepo.count();
         Assert.assertEquals(2, actiounsCount);
 
-        Assert.assertNotNull(auctionsByMarkFromDB);
-        Assert.assertEquals(1, auctionsByMarkFromDB.size());
-        Assert.assertEquals(auction1, auctionsByMarkFromDB.get(0));
+        Assert.assertNotNull(auctionsByMakeFromDB);
+        Assert.assertEquals(1, auctionsByMakeFromDB.size());
+        Assert.assertEquals(auction1, auctionsByMakeFromDB.get(0));
     }
 
     @After

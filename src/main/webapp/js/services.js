@@ -2,7 +2,7 @@
 
 /* Services */
 angular.module('myApp.services', ['ngResource']).service("Auction", function($resource) {
-    this.marks = $resource('rest/marks', {}, {
+    this.makes = $resource('rest/makes', {}, {
         query: {method: 'GET', params: {}, isArray: true}
     });
     this.colors = $resource('rest/colors', {}, {

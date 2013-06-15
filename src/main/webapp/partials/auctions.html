@@ -1,24 +1,40 @@
 
 <div class="well">
-    <input data-ng-model="searchFilter">
-    <select data-ng-model="orderProp">
-        <option value="productionYear">Year</option>
-        <option value="age">Newest</option>
-    </select>
+    <!--<input data-ng-model="searchFilter">-->
 </div>
 <div class="row">
     <div class="span2 auction-sidebar">
         <div >
             <h4>Parameters</h4>
             <div>
+                <h5>Make</h5>
+                <select data-ng-model="make" data-ng-options="m.name for m in makes" data-ng-change="model = null">
+                    <option value="">-- chose make --</option>
+                </select>
+            </div>
+            <hr>
+            <div>
+                <h5>Model</h5>
+                <select data-ng-model="model" data-ng-options="m.name for m in make.models">
+                    <option value="">-- chose model --</option>
+                </select>
+            </div>
+            <hr>
+            <div>
                 <h5>Price (EU)</h5>
                 <input data-ng-model="priceFrom" class="price" placeholder="from"> - <input data-ng-model="priceTo" class="price" placeholder="to">
             </div>
+            <hr>
+            <div>
+                <h5>Production year</h5>
+                <input data-ng-model="yearFrom" class="price" placeholder="from"> - <input data-ng-model="yearTo" class="price" placeholder="to">
+            </div>
+            <hr>
         </div>
-        <hr>
     </div>
     <div class="span10 auction-content">
-        <div class="row auction-row" data-ng-repeat="car in auctions | priceFromFilter: priceFrom:priceTo">
+        <!--<div class="row auction-row" data-ng-repeat="car in auctions | filter:make.name | modelFilter: model">-->
+        <div class="row auction-row" data-ng-repeat="car in auctions | filter:make.name | modelFilter:model | priceFilter: priceFrom:priceTo | yearFilter: yearFrom:yearTo">
 
             <div class="span2">
                 <a href="#" >
@@ -27,11 +43,11 @@
             </div>
             <div class="span6">
                 <h3><a data-ng-href="#/car/{{car.id}}">{{car.title}}</a></h3>
-                <h4>{{car.mark.name}} - {{car.model.name}}</h4>
+                <h4>{{car.make.name}} - {{car.model.name}}</h4>
                 <span>{{car.productionYear | date:'yyyy'}}, {{car.milage}} km, {{car.fuelType | lowercase}}</span>
             </div>
             <div class="span2">
-                <h3><span class="price">{{car.price | currency: "EU " }}</span></h3>
+                <h4><span class="price">{{car.price | currency: "" }}</span></h4>
             </div>
         </div>
     </div>

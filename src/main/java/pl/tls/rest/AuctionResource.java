@@ -24,13 +24,13 @@ import javax.ws.rs.Produces;
 import pl.tls.entity.Auction;
 import pl.tls.entity.Color;
 import pl.tls.entity.FuelType;
-import pl.tls.entity.Mark;
+import pl.tls.entity.Make;
 import pl.tls.entity.Model;
 import pl.tls.rest.dto.ColorDTO;
 import pl.tls.rest.dto.FuelTypeDTO;
 import pl.tls.rest.pojo.AddAuctionRequest;
 import pl.tls.repo.AuctionRepo;
-import pl.tls.repo.MarkRepo;
+import pl.tls.repo.MakeRepo;
 import pl.tls.repo.ModelRepo;
 import pl.tls.service.util.LoggingInterceptor;
 
@@ -49,7 +49,7 @@ public class AuctionResource {
     @Inject
     private AuctionRepo auctionRepo;
     @Inject
-    private MarkRepo markRepo;
+    private MakeRepo makeRepo;
     @Inject
     private ModelRepo modelRepo;
 
@@ -61,10 +61,10 @@ public class AuctionResource {
     }
 
     @GET
-    @Path("marks")
+    @Path("makes")
     @Produces("application/json")
-    public List<Mark> getMarks() {
-        return markRepo.findAll();
+    public List<Make> getMakes() {
+        return makeRepo.findAll();
     }
 
     @GET
@@ -111,7 +111,7 @@ public class AuctionResource {
     @Produces("application/json")
     public void saveAuction(AddAuctionRequest request) {
 
-        Mark mark = markRepo.findById(request.getMarkId());
+        Make make = makeRepo.findById(request.getMakeId());
         Model model = modelRepo.findById(request.getModelId());
 
         Auction auction = new Auction();
@@ -119,7 +119,7 @@ public class AuctionResource {
         auction.setDescription(request.getDescription());
 
         auction.setProductionYear(toDate(request.getProductionYear()));
-        auction.setMark(mark);
+        auction.setMake(make);
         auction.setModel(model);
         auction.setColor(Color.valueOf(request.getColor()));
         auction.setFuelType(FuelType.valueOf(request.getFuel()));
