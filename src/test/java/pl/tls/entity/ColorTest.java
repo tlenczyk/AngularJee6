@@ -4,8 +4,9 @@
  */
 package pl.tls.entity;
 
-import org.junit.Assert;
 import org.junit.Test;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.notNullValue;
 
 /**
  *
@@ -13,13 +14,13 @@ import org.junit.Test;
  */
 public class ColorTest {
 
-	public ColorTest() {
-	}
+    public ColorTest() {
+    }
 
-	//
-	@Test
-	public void testRandom() {
-		Color random = Color.getRandom();
-		Assert.assertNotNull(random);
-	}
+    //
+    @Test
+    public void testRandom() {
+        Color random = Color.getRandom();
+        assertThat(random, notNullValue());
+    }
 }

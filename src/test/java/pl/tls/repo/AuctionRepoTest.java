@@ -3,7 +3,6 @@ package pl.tls.repo;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
-import pl.tls.repo.AuctionRepo;
 import javax.inject.Inject;
 import org.jboss.arquillian.container.test.api.Deployment;
 import org.jboss.arquillian.junit.Arquillian;
@@ -23,6 +22,13 @@ import pl.tls.entity.FuelType;
 import pl.tls.entity.Make;
 import pl.tls.entity.Model;
 import pl.tls.service.util.Producer;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.notNullValue;
+import org.jboss.arquillian.transaction.api.annotation.TransactionMode;
+import org.jboss.arquillian.transaction.api.annotation.Transactional;
 
 /**
  *
@@ -60,6 +66,7 @@ public class AuctionRepoTest {
     }
 
     @Test
+    @Transactional(TransactionMode.ROLLBACK)
     public void shouldSaveOneAuction() throws Exception {
         //Given
         Auction auction = createAuction();
@@ -67,16 +74,16 @@ public class AuctionRepoTest {
         //When
         auctionRepo.save(auction);
         Auction auctionFromDB = auctionRepo.findById(auction.getId());
+        long count = auctionRepo.count();
 
         //Then
-        long count = auctionRepo.count();
-        Assert.assertEquals(1, count);
-
-        Assert.assertNotNull(auctionFromDB);
-        Assert.assertEquals(auction, auctionFromDB);
+        assertThat(count, is(equalTo(1L)));
+        assertThat(auctionFromDB, is(notNullValue()));
+        assertThat(auction, is(equalTo(auctionFromDB)));
     }
 
     @Test
+    @Transactional(TransactionMode.ROLLBACK)
     public void shouldFindAuctionsByMakeName() throws Exception {
         //Given
         Make make = new Make("Peugeot");
@@ -99,22 +106,20 @@ public class AuctionRepoTest {
 
         //When
         List<Auction> auctionsByMakeFromDB = auctionRepo.getAuctionsByMake(make.getName());
+        long actiounsCount = auctionRepo.count();
 
         //Then
-        long actiounsCount = auctionRepo.count();
-        Assert.assertEquals(2, actiounsCount);
+        assertThat(actiounsCount, is(equalTo(2L)));
 
-        Assert.assertNotNull(auctionsByMakeFromDB);
-        Assert.assertEquals(1, auctionsByMakeFromDB.size());
-        Assert.assertEquals(auction1, auctionsByMakeFromDB.get(0));
+        assertThat(auctionsByMakeFromDB, is(notNullValue()));
+        assertThat(auction1, is(equalTo(auctionsByMakeFromDB.get(0))));
     }
 
-    @After
-    public void cleanup() throws Exception {
-        int removed = auctionRepo.deleteAll();
-        System.out.println("Auctions removed: " + removed);
-    }
-
+//    @After
+//    public void cleanup() throws Exception {
+//        int removed = auctionRepo.deleteAll();
+//        System.out.println("Auctions removed: " + removed);
+//    }
     private Auction createAuction() {
         Auction auction = new Auction();
         auction.setTitle("Title");

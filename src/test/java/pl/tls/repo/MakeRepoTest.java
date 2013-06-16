@@ -11,13 +11,18 @@ import org.jboss.shrinkwrap.api.asset.EmptyAsset;
 import org.jboss.shrinkwrap.api.spec.WebArchive;
 import org.jboss.shrinkwrap.resolver.api.DependencyResolvers;
 import org.jboss.shrinkwrap.resolver.api.maven.MavenDependencyResolver;
-import org.junit.After;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import pl.tls.entity.Make;
 import pl.tls.entity.Model;
 import pl.tls.service.util.Producer;
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.empty;
+import static org.hamcrest.Matchers.notNullValue;
+import org.jboss.arquillian.transaction.api.annotation.TransactionMode;
+import org.jboss.arquillian.transaction.api.annotation.Transactional;
 
 /**
  *
@@ -49,44 +54,46 @@ public class MakeRepoTest {
 
     @Test
     public void shouldInject() throws Exception {
-        Assert.assertNotNull(makeRepo);
+        assertThat(makeRepo, is(notNullValue()));
     }
 
     @Test
+    @Transactional(TransactionMode.ROLLBACK)
     public void shouldSaveOneMake() throws Exception {
         Make m = createMake();
         makeRepo.save(m);
         long count = makeRepo.count();
-        Assert.assertEquals(1, count);
+        assertThat(count, is(equalTo(1L)));
     }
 
     @Test
+    @Transactional(TransactionMode.ROLLBACK)
     public void shouldSaveOneMakeWithTwoModels() throws Exception {
         //Given
         Make make = createMake();
 
         //When
         makeRepo.save(make);
-
-        //Then
         long count = makeRepo.count();
         List<Make> allMakes = makeRepo.findAll();
 
-        Assert.assertEquals(1, count);
-        Assert.assertEquals(1, allMakes.size());
+        //Then
+        assertThat(count, is(equalTo(1L)));
+        assertThat(allMakes.size(), is(equalTo(1)));
         Make makeFromDB = allMakes.get(0);
 
-        Assert.assertEquals(make.getName(), makeFromDB.getName());
+        assertThat(make.getName(), is(equalTo(makeFromDB.getName())));
 
         List<Model> modelsFromDB = makeFromDB.getModels();
 
-        Assert.assertNotNull(modelsFromDB);
-        Assert.assertEquals(2, modelsFromDB.size());
-        Assert.assertEquals(make.getModels().get(0).getName(), modelsFromDB.get(0).getName());
-        Assert.assertEquals(make.getModels().get(1).getName(), modelsFromDB.get(1).getName());
+        assertThat(modelsFromDB, is(notNullValue()));
+        assertThat(modelsFromDB.size(), is(equalTo(2)));
+        assertThat(make.getModels().get(0).getName(), is(equalTo(modelsFromDB.get(0).getName())));
+        assertThat(make.getModels().get(1).getName(), is(equalTo(modelsFromDB.get(1).getName())));
     }
 
     @Test
+    @Transactional(TransactionMode.ROLLBACK)
     public void shouldRremoveModelsWhenMakeRemoved() throws Exception {
         //Given
         Make make = createMake();
@@ -95,24 +102,16 @@ public class MakeRepoTest {
         //When
         makeRepo.save(make);
         makeRepo.deleteById(make.getId());
-
-
-
-        //Then
         List<Make> allMakesFromDB = makeRepo.findAll();
         List<Model> allModelsFromDB = modelRepo.findAll();
 
-        Assert.assertNotNull(allMakesFromDB);
-        Assert.assertEquals(0, allMakesFromDB.size());
 
-        Assert.assertNotNull(allModelsFromDB);
-        Assert.assertEquals(0, allModelsFromDB.size());
-    }
+        //Then
+        assertThat(allMakesFromDB, is(notNullValue()));
+        assertThat(allMakesFromDB, is(empty()));
 
-    @After
-    public void cleanup() throws Exception {
-        int removed = makeRepo.deleteAll();
-        System.out.println("Marks removed: " + removed);
+        assertThat(allModelsFromDB, is(notNullValue()));
+        assertThat(allModelsFromDB, is(empty()));
     }
 
     private Make createMake() {
