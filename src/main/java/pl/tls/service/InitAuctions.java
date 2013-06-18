@@ -24,6 +24,7 @@ import pl.tls.entity.Makes;
 import pl.tls.entity.Model;
 import pl.tls.repo.MakeRepo;
 import pl.tls.repo.ModelRepo;
+import pl.tls.service.util.EnumUtil;
 
 /**
  *
@@ -57,7 +58,10 @@ public class InitAuctions {
                 Calendar gc = new GregorianCalendar();
                 gc.set(Calendar.YEAR, 2000 + i);
 
-                Auction auction = new Auction("title " + i, "desciption " + i, gc.getTime(), makeToSave, model, Color.getRandom(), new BigDecimal(getRandom(30000)), FuelType.GASOLINE, Long.valueOf(getRandom(500001)), new Date());
+                Calendar creationDate = new GregorianCalendar();
+                creationDate.set(Calendar.MINUTE, i);
+
+                Auction auction = new Auction("title " + i, "desciption " + i, gc.getTime(), makeToSave, model, EnumUtil.getRandom(Color.class), new BigDecimal(getRandom(30000)), EnumUtil.getRandom(FuelType.class), Long.valueOf(getRandom(500001)), creationDate.getTime());
                 auctionRepo.save(auction);
             }
         }

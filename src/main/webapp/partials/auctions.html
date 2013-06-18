@@ -1,6 +1,26 @@
 
 <div class="well">
-    <!--<input data-ng-model="searchFilter">-->
+    <span>Order by
+        <select data-ng-model="orderBySelect">
+            <option value="">Search by</option>
+            <optgroup label="Creation date">
+                <option value="creationDate">Creation date Asc</option>
+                <option value="-creationDate">Creation date Desc</option>
+            </optgroup>
+            <optgroup label="Production year">
+                <option value="productionYear">Production year Asc</option>
+                <option value="-productionYear">Production year Desc</option>
+            </optgroup>
+            <optgroup label="Price">
+                <option value="price">Price Asc</option>
+                <option value="-price">Price Desc</option>
+            </optgroup>
+            <optgroup label="Kilemeters">
+                <option value="milage">Kilemeters Asc</option>
+                <option value="-milage">Kilemeters Desc</option>
+            </optgroup>
+        </select>
+    </span>
 </div>
 <div class="row">
     <div class="span2 auction-sidebar">
@@ -21,6 +41,13 @@
             </div>
             <hr>
             <div>
+                <h5>Fuel type</h5>
+                <select data-ng-model="fuelType" data-ng-options="f.name for f in fuelTypes">
+                    <option value="">-- chose fuel type --</option>
+                </select>
+            </div>
+            <hr>
+            <div>
                 <h5>Price (EU)</h5>
                 <input data-ng-model="priceFrom" class="price" placeholder="from"> - <input data-ng-model="priceTo" class="price" placeholder="to">
             </div>
@@ -33,21 +60,22 @@
         </div>
     </div>
     <div class="span10 auction-content">
-        <!--<div class="row auction-row" data-ng-repeat="car in auctions | filter:make.name | modelFilter: model">-->
-        <div class="row auction-row" data-ng-repeat="car in auctions | filter:make.name | modelFilter:model | priceFilter: priceFrom:priceTo | yearFilter: yearFrom:yearTo">
+        <div class="row auction-row" data-ng-repeat="a in auctions | filter:make.name | modelFilter:model | filter:fuelType.name | priceFilter: priceFrom:priceTo | yearFilter: yearFrom:yearTo | orderBy:orderBySelect">
 
             <div class="span2">
                 <a href="#" >
-                    <img src="img/thumb1.png" alt="" class="img-polaroid">
+                    <img src="img/no-image.jpg" alt="" class="img-polaroid">
                 </a>
             </div>
             <div class="span6">
-                <h3><a data-ng-href="#/car/{{car.id}}">{{car.title}}</a></h3>
-                <h4>{{car.make.name}} - {{car.model.name}}</h4>
-                <span>{{car.productionYear | date:'yyyy'}}, {{car.milage}} km, {{car.fuelType | lowercase}}</span>
+                <h3><a data-ng-href="#/car/{{a.id}}">{{a.title}}</a></h3>
+                <h4>{{a.make.name}} - {{a.model.name}}</h4>
+                <span>{{a.productionYear | date:'yyyy'}}, {{a.milage}} km, {{a.fuelType | lowercase}}</span>
+                <br>
+                <span>Added {{a.creationDate | date:'medium'}}</span>
             </div>
             <div class="span2">
-                <h4><span class="price">{{car.price | currency: "" }}</span></h4>
+                <h4><span class="price">{{a.price | currency: "" }}</span></h4>
             </div>
         </div>
     </div>

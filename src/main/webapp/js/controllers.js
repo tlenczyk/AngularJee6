@@ -5,6 +5,7 @@
 angular.module('myApp.controllers', [])
         .controller('AuctionsCtrl', function($scope, Auction) {
     $scope.makes = Auction.makes.query();
+    $scope.fuelTypes = Auction.fuelTypes.query();
     $scope.auctions = Auction.auctions.query();
 
 }).controller('AuctionDetailsCtrl', function($scope, $routeParams, Auction) {
