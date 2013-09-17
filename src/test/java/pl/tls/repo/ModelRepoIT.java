@@ -26,7 +26,7 @@ import org.jboss.arquillian.transaction.api.annotation.Transactional;
  * @author Tomasz.Lenczyk
  */
 @RunWith(Arquillian.class)
-public class ModelRepoTest {
+public class ModelRepoIT {
 
     @Deployment
     public static Archive<?> createDeployment() {
